@@ -1,28 +1,33 @@
-function Button () {
+import DigitButton from "./DigitButton";
+import OperationButton from "./OperationButton";
+import {formatOperand} from "./App"
+
+function Button ({currentOperation, previousOperation,dispatch}) {
+    
     return(
         <div className= "calculator-grid">
             <div className="output">
-                <div className="previous">122543</div>
-                <div className="current">56618635</div>
+                <div className="previous">{formatOperand(previousOperation)}</div>
+                <div className="current">{formatOperand(currentOperation)}</div>
             </div>
-            <button className = "span-two">C</button>
-            <button>DEL</button>
-            <button>+</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>*</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>/</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button>-</button>
-            <button>.</button>
-            <button>0</button>
-            <button className = "span-two">=</button>
+            <button className = "span-two" onClick={() =>dispatch({type: "clear"})}>C</button>
+            <button onClick={() => dispatch({type: "delete"})}>DEL</button>
+            <OperationButton operation="+" dispatch={dispatch} />
+            <DigitButton digit="1" dispatch={dispatch}/>
+            <DigitButton digit="2" dispatch={dispatch}/>
+            <DigitButton digit="3" dispatch={dispatch}/>
+            <OperationButton operation="*" dispatch={dispatch} />
+            <DigitButton digit="4" dispatch={dispatch}/>
+            <DigitButton digit="5" dispatch={dispatch}/>
+            <DigitButton digit="6" dispatch={dispatch}/>
+            <OperationButton operation="/" dispatch={dispatch} />
+            <DigitButton digit="7" dispatch={dispatch}/>
+            <DigitButton digit="8" dispatch={dispatch}/>
+            <DigitButton digit="9" dispatch={dispatch}/>
+            <OperationButton operation="-" dispatch={dispatch} />
+            <DigitButton digit="." dispatch={dispatch}/>
+            <DigitButton digit="0" dispatch={dispatch}/>
+            <button className = "span-two" onClick={() => dispatch({type: "evaluate"})}>=</button>
         </div>
     );
 }
