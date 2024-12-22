@@ -53,7 +53,7 @@ button{
   font-family:  'Roboto', sans-serif;
 }
 
-.output .previous{
+.output .previous, .operation {
   color: rgba(255, 255, 255, .75);
   font-size: 20px;
 }
@@ -61,4 +61,10 @@ button{
 .output .current{
   color: rgba(255, 255, 255, .75);
   font-size: 30px;
+}
+
+.previous-and-operation {
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }

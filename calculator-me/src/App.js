@@ -13,6 +13,11 @@ export const ACTION ={
 }
 
 function reducer(state, {type, payload}) {
+  console.log("Action Type:", type);
+  console.log("Payload:", payload);
+  console.log("State Before:", state);
+  
+ 
   switch(type) {
     case ACTION.ADD_DIGIT:
       if(state.overwrite) {
@@ -35,16 +40,32 @@ function reducer(state, {type, payload}) {
         ...state,
         currentOperation: `${state.currentOperation || ""}${payload.digit}`,
       };
-    case ACTION.CHOOSE_OPERATION:
-      if(state.currentOperation == null && state.previousOperation == null) {
-        return state;
-      }
-      return {
-        ...state, 
-        operation: payload.operation,
-        previousOperation: state.currentOperation,
-        currentOperation: ""
-      };
+      case ACTION.CHOOSE_OPERATION:
+        // If there's no current or previous operation, return as is
+        if (state.currentOperation === null && state.previousOperation === null) {
+          return state;
+        }
+  
+        // If currentOperation is null, just set the operation without changing the number
+        if (state.currentOperation === null) {
+          return {
+            ...state,
+            operation: payload.operation,
+          };
+        }
+  
+        // If previousOperation is null, move currentOperation to previousOperation and reset current
+       
+          return {
+            ...state,
+            previousOperation: state.currentOperation,
+            operation: payload.operation,
+            currentOperation: null,
+          };
+        
+  
+        // If both current and previous exist, evaluate and set new operation
+        
     case ACTION.CLEAR:
       return{
       currentOperation: "",
@@ -63,6 +84,7 @@ function reducer(state, {type, payload}) {
       ...state,
       currentOperation: state.currentOperation?.slice(0, -1) || "",
     };
+
     case ACTION.EVALUATE:
       if(state.operation == null || state.currentOperation == null || state.previousOperation ==null) {
         return state;

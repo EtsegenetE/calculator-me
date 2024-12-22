@@ -1,17 +1,21 @@
 import DigitButton from "./DigitButton";
 import OperationButton from "./OperationButton";
 import {formatOperand} from "./App"
+import { ACTION } from "./App";
 
-function Button ({currentOperation, previousOperation,dispatch}) {
+function Button ({currentOperation, previousOperation, operation, dispatch}) {
     
     return(
         <div className= "calculator-grid">
             <div className="output">
+                <div className="previous-and-operation">
                 <div className="previous">{formatOperand(previousOperation)}</div>
+                {operation && <div className="operation">{operation}</div>}
+                </div>
                 <div className="current">{formatOperand(currentOperation)}</div>
             </div>
-            <button className = "span-two" onClick={() =>dispatch({type: "clear"})}>C</button>
-            <button onClick={() => dispatch({type: "delete"})}>DEL</button>
+            <button className = "span-two" onClick={() =>dispatch({type: ACTION.CLEAR})}>C</button>
+            <button onClick={() => dispatch({type: ACTION.DELETE})}>DEL</button>
             <OperationButton operation="+" dispatch={dispatch} />
             <DigitButton digit="1" dispatch={dispatch}/>
             <DigitButton digit="2" dispatch={dispatch}/>
@@ -27,7 +31,7 @@ function Button ({currentOperation, previousOperation,dispatch}) {
             <OperationButton operation="-" dispatch={dispatch} />
             <DigitButton digit="." dispatch={dispatch}/>
             <DigitButton digit="0" dispatch={dispatch}/>
-            <button className = "span-two" onClick={() => dispatch({type: "evaluate"})}>=</button>
+            <button className = "span-two" onClick={() => dispatch({type: ACTION.EVALUATE})}>=</button>
         </div>
     );
 }
